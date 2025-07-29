@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 앱 기본 정보 -->
+    <string name="app_name">HanDoc AI</string>
+    <string name="app_description">문서를 이해하는 가장 빠른 방법</string>
+    
+    <!-- 메인 화면 -->
+    <string name="welcome_title">HanDoc AI에 오신 것을 환영합니다</string>
+    <string name="welcome_subtitle">AI로 PDF 문서를 빠르게 분석하세요</string>
+    
+    <!-- 탭 메뉴 -->
+    <string name="tab_home">홈</string>
+    <string name="tab_documents">문서</string>
+    <string name="tab_analysis">분석</string>
+    <string name="tab_settings">설정</string>
+    
+    <!-- 파일 업로드 -->
+    <string name="upload_title">PDF 파일 업로드</string>
+    <string name="upload_description">분석할 PDF 파일을 선택하세요</string>
+    <string name="upload_button">파일 선택</string>
+    <string name="upload_camera">카메라로 촬영</string>
+    <string name="upload_gallery">갤러리에서 선택</string>
+    <string name="upload_files">파일 탐색기</string>
+    
+    <!-- 분석 결과 -->
+    <string name="analysis_summary">요약</string>
+    <string name="analysis_qa">질문과 답변</string>
+    <string name="analysis_keywords">키워드</string>
+    <string name="analysis_sentences">중요 문장</string>
+    
+    <!-- 저장 및 공유 -->
+    <string name="save_title">결과 저장</string>
+    <string name="save_markdown">Markdown으로 저장</string>
+    <string name="save_pdf">PDF로 저장</string>
+    <string name="save_text">텍스트로 저장</string>
+    <string name="share_title">공유하기</string>
+    <string name="share_link">링크 복사</string>
+    <string name="share_chatgpt">ChatGPT로 보내기</string>
+    
+    <!-- 설정 -->
+    <string name="settings_title">설정</string>
+    <string name="settings_account">계정</string>
+    <string name="settings_language">언어</string>
+    <string name="settings_theme">테마</string>
+    <string name="settings_notifications">알림</string>
+    <string name="settings_about">앱 정보</string>
+    
+    <!-- 로그인 -->
+    <string name="login_title">로그인</string>
+    <string name="login_email">이메일</string>
+    <string name="login_password">비밀번호</string>
+    <string name="login_button">로그인</string>
+    <string name="login_register">회원가입</string>
+    <string name="login_forgot">비밀번호 찾기</string>
+    
+    <!-- 오류 메시지 -->
+    <string name="error_network">네트워크 연결을 확인해주세요</string>
+    <string name="error_file_format">지원하지 않는 파일 형식입니다</string>
+    <string name="error_file_size">파일 크기가 너무 큽니다 (최대 10MB)</string>
+    <string name="error_analysis">분석 중 오류가 발생했습니다</string>
+    <string name="error_login">로그인에 실패했습니다</string>
+    
+    <!-- 성공 메시지 -->
+    <string name="success_upload">파일 업로드가 완료되었습니다</string>
+    <string name="success_analysis">분석이 완료되었습니다</string>
+    <string name="success_save">파일이 저장되었습니다</string>
+    <string name="success_share">링크가 복사되었습니다</string>
+    
+    <!-- 로딩 메시지 -->
+    <string name="loading_upload">파일을 업로드하는 중...</string>
+    <string name="loading_analysis">AI가 문서를 분석하는 중...</string>
+    <string name="loading_save">파일을 저장하는 중...</string>
+    
+    <!-- 버튼 텍스트 -->
+    <string name="button_ok">확인</string>
+    <string name="button_cancel">취소</string>
+    <string name="button_retry">다시 시도</string>
+    <string name="button_close">닫기</string>
+    <string name="button_next">다음</string>
+    <string name="button_previous">이전</string>
+    
+    <!-- 권한 요청 -->
+    <string name="permission_camera_title">카메라 권한 필요</string>
+    <string name="permission_camera_message">문서를 촬영하기 위해 카메라 권한이 필요합니다</string>
+    <string name="permission_storage_title">저장소 권한 필요</string>
+    <string name="permission_storage_message">파일을 저장하기 위해 저장소 권한이 필요합니다</string>
+    
+    <!-- 앱 정보 -->
+    <string name="about_version">버전 1.0.0</string>
+    <string name="about_developer">개발: HanDoc AI Team</string>
+    <string name="about_contact">문의: support@handoc.ai</string>
+    <string name="about_website">웹사이트: https://handoc-ai.vercel.app</string>
+    <string name="about_github">GitHub: https://github.com/yhun1542/handoc-ai</string>
+</resources>
+
