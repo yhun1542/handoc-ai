@@ -1,0 +1,194 @@
+# FastAPI 및 웹 프레임워크
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+gunicorn==21.2.0
+
+# 데이터베이스
+sqlalchemy==2.0.23
+alembic==1.12.1
+psycopg2-binary==2.9.9
+asyncpg==0.29.0
+
+# Redis 및 캐싱
+redis==5.0.1
+aioredis==2.0.1
+
+# 인증 및 보안
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.6
+bcrypt==4.1.2
+
+# PDF 처리
+PyMuPDF==1.23.8
+pdfplumber==0.10.3
+pdf2image==1.16.3
+Pillow==10.1.0
+
+# AI 및 텍스트 처리
+openai==1.3.7
+tiktoken==0.5.2
+kss==4.5.4
+hanspell==1.1
+langdetect==1.0.9
+
+# 파일 처리 및 스토리지
+boto3==1.34.0
+minio==7.2.0
+python-magic==0.4.27
+
+# HTTP 클라이언트
+httpx==0.25.2
+aiohttp==3.9.1
+requests==2.31.0
+
+# 데이터 검증 및 직렬화
+pydantic==2.5.0
+pydantic-settings==2.1.0
+email-validator==2.1.0
+
+# 유틸리티
+python-dotenv==1.0.0
+loguru==0.7.2
+celery==5.3.4
+flower==2.0.1
+
+# 모니터링 및 로깅
+sentry-sdk[fastapi]==1.38.0
+prometheus-client==0.19.0
+
+# 테스트
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-cov==4.1.0
+httpx==0.25.2
+factory-boy==3.3.0
+
+# 개발 도구
+black==23.11.0
+flake8==6.1.0
+isort==5.12.0
+mypy==1.7.1
+pre-commit==3.6.0
+
+# 문서화
+mkdocs==1.5.3
+mkdocs-material==9.4.8
+
+# 날짜 및 시간
+python-dateutil==2.8.2
+pytz==2023.3
+
+# 환경 변수 및 설정
+python-decouple==3.8
+
+# 이미지 처리
+opencv-python==4.8.1.78
+
+# 압축 및 아카이브
+zipfile36==0.1.3
+
+# 네트워킹
+websockets==12.0
+
+# 큐 및 백그라운드 작업
+rq==1.15.1
+
+# 메트릭 및 모니터링
+psutil==5.9.6
+
+# 국제화
+babel==2.13.1
+
+# 마크다운 처리
+markdown==3.5.1
+python-markdown-math==0.8
+
+# 엑셀 파일 처리
+openpyxl==3.1.2
+xlsxwriter==3.1.9
+
+# JSON 처리
+orjson==3.9.10
+
+# 암호화
+cryptography==41.0.7
+
+# 시간대 처리
+zoneinfo==0.2.1; python_version < "3.9"
+
+# 타입 힌트
+typing-extensions==4.8.0
+
+# 비동기 처리
+asyncio==3.4.3; python_version < "3.7"
+aiofiles==23.2.1
+
+# 환경 설정
+dynaconf==3.2.4
+
+# 데이터 변환
+marshmallow==3.20.1
+
+# 캐시 데코레이터
+cachetools==5.3.2
+
+# 정규표현식
+regex==2023.10.3
+
+# 문자열 처리
+unidecode==1.3.7
+
+# 병렬 처리
+concurrent-futures==3.1.1; python_version < "3.2"
+
+# 메모리 프로파일링
+memory-profiler==0.61.0
+
+# 성능 모니터링
+py-spy==0.3.14
+
+# 코드 품질
+bandit==1.7.5
+safety==2.3.5
+
+# API 문서화
+fastapi-users==12.1.2
+fastapi-pagination==0.12.13
+
+# 소셜 로그인
+authlib==1.2.1
+python-social-auth==0.3.6
+
+# 이메일
+fastapi-mail==1.4.1
+jinja2==3.1.2
+
+# 파일 업로드
+python-magic-bin==0.4.14; sys_platform == "win32"
+
+# 환경별 설정
+environs==10.0.0
+
+# 스케줄링
+apscheduler==3.10.4
+
+# 웹소켓
+fastapi-websocket-pubsub==0.3.0
+
+# 미들웨어
+slowapi==0.1.9
+fastapi-limiter==0.1.5
+
+# 헬스체크
+fastapi-health==0.4.0
+
+# CORS
+fastapi-cors==0.0.6
+
+# 압축
+fastapi-gzip==0.1.0
+
+# 로깅 미들웨어
+fastapi-logging==0.1.0
+

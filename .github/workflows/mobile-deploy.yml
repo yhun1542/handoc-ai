@@ -1,0 +1,369 @@
+name: Mobile App Deployment
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'mobile/**'
+      - '.github/workflows/mobile-deploy.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'mobile/**'
+
+env:
+  JAVA_VERSION: '17'
+  NODE_VERSION: '20'
+
+jobs:
+  android-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: ${{ env.JAVA_VERSION }}
+        distribution: 'temurin'
+
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v2
+
+    - name: Cache Gradle packages
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+
+    - name: Grant execute permission for gradlew
+      working-directory: ./mobile/android
+      run: chmod +x gradlew
+
+    - name: Run lint
+      working-directory: ./mobile/android
+      run: ./gradlew lintDebug
+
+    - name: Run unit tests
+      working-directory: ./mobile/android
+      run: ./gradlew testDebugUnitTest
+
+    - name: Generate test report
+      working-directory: ./mobile/android
+      run: ./gradlew jacocoTestReport
+
+    - name: Upload test results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: android-test-results
+        path: mobile/android/app/build/reports/
+        retention-days: 7
+
+  android-build:
+    needs: android-test
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        build-type: [debug, release]
+    
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: ${{ env.JAVA_VERSION }}
+        distribution: 'temurin'
+
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v2
+
+    - name: Cache Gradle packages
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+
+    - name: Grant execute permission for gradlew
+      working-directory: ./mobile/android
+      run: chmod +x gradlew
+
+    - name: Decode Keystore
+      if: matrix.build-type == 'release'
+      env:
+        ENCODED_STRING: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+      run: |
+        echo $ENCODED_STRING | base64 -di > mobile/android/app/keystore.jks
+
+    - name: Build Debug APK
+      if: matrix.build-type == 'debug'
+      working-directory: ./mobile/android
+      run: ./gradlew assembleDebug
+
+    - name: Build Release APK
+      if: matrix.build-type == 'release'
+      working-directory: ./mobile/android
+      env:
+        SIGNING_KEY_ALIAS: ${{ secrets.ANDROID_SIGNING_KEY_ALIAS }}
+        SIGNING_KEY_PASSWORD: ${{ secrets.ANDROID_SIGNING_KEY_PASSWORD }}
+        SIGNING_STORE_PASSWORD: ${{ secrets.ANDROID_SIGNING_STORE_PASSWORD }}
+      run: ./gradlew assembleRelease
+
+    - name: Build Release Bundle
+      if: matrix.build-type == 'release'
+      working-directory: ./mobile/android
+      env:
+        SIGNING_KEY_ALIAS: ${{ secrets.ANDROID_SIGNING_KEY_ALIAS }}
+        SIGNING_KEY_PASSWORD: ${{ secrets.ANDROID_SIGNING_KEY_PASSWORD }}
+        SIGNING_STORE_PASSWORD: ${{ secrets.ANDROID_SIGNING_STORE_PASSWORD }}
+      run: ./gradlew bundleRelease
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: android-apk-${{ matrix.build-type }}
+        path: mobile/android/app/build/outputs/apk/${{ matrix.build-type }}/*.apk
+        retention-days: 7
+
+    - name: Upload Bundle
+      if: matrix.build-type == 'release'
+      uses: actions/upload-artifact@v3
+      with:
+        name: android-bundle-release
+        path: mobile/android/app/build/outputs/bundle/release/*.aab
+        retention-days: 30
+
+  ios-test:
+    runs-on: macos-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: '15.0'
+
+    - name: Cache CocoaPods
+      uses: actions/cache@v3
+      with:
+        path: mobile/ios/Pods
+        key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-pods-
+
+    - name: Install CocoaPods
+      working-directory: ./mobile/ios
+      run: |
+        if [ -f Podfile ]; then
+          pod install --repo-update
+        fi
+
+    - name: Run tests
+      working-directory: ./mobile/ios
+      run: |
+        xcodebuild test \
+          -workspace HanDocAI.xcworkspace \
+          -scheme HanDocAI \
+          -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.0' \
+          -resultBundlePath TestResults.xcresult
+
+    - name: Upload test results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: ios-test-results
+        path: mobile/ios/TestResults.xcresult
+        retention-days: 7
+
+  ios-build:
+    needs: ios-test
+    runs-on: macos-latest
+    
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+    
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: '15.0'
+
+    - name: Install Apple Certificate
+      if: matrix.configuration == 'Release'
+      env:
+        BUILD_CERTIFICATE_BASE64: ${{ secrets.IOS_BUILD_CERTIFICATE_BASE64 }}
+        P12_PASSWORD: ${{ secrets.IOS_P12_PASSWORD }}
+        KEYCHAIN_PASSWORD: ${{ secrets.IOS_KEYCHAIN_PASSWORD }}
+      run: |
+        # create variables
+        CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+        KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+
+        # import certificate from secrets
+        echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode --output $CERTIFICATE_PATH
+
+        # create temporary keychain
+        security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+        security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+        security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+
+        # import certificate to keychain
+        security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+        security list-keychain -d user -s $KEYCHAIN_PATH
+
+    - name: Install Provisioning Profile
+      if: matrix.configuration == 'Release'
+      env:
+        PROVISIONING_PROFILE_BASE64: ${{ secrets.IOS_PROVISIONING_PROFILE_BASE64 }}
+      run: |
+        PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+        echo -n "$PROVISIONING_PROFILE_BASE64" | base64 --decode --output $PP_PATH
+        mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+        cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+
+    - name: Build Debug
+      if: matrix.configuration == 'Debug'
+      working-directory: ./mobile/ios
+      run: |
+        xcodebuild build \
+          -workspace HanDocAI.xcworkspace \
+          -scheme HanDocAI \
+          -configuration Debug \
+          -destination 'generic/platform=iOS Simulator'
+
+    - name: Build Release
+      if: matrix.configuration == 'Release'
+      working-directory: ./mobile/ios
+      run: |
+        xcodebuild archive \
+          -workspace HanDocAI.xcworkspace \
+          -scheme HanDocAI \
+          -configuration Release \
+          -destination 'generic/platform=iOS' \
+          -archivePath $RUNNER_TEMP/HanDocAI.xcarchive
+
+    - name: Export IPA
+      if: matrix.configuration == 'Release'
+      working-directory: ./mobile/ios
+      run: |
+        xcodebuild -exportArchive \
+          -archivePath $RUNNER_TEMP/HanDocAI.xcarchive \
+          -exportOptionsPlist ExportOptions.plist \
+          -exportPath $RUNNER_TEMP/build
+
+    - name: Upload IPA
+      if: matrix.configuration == 'Release'
+      uses: actions/upload-artifact@v3
+      with:
+        name: ios-ipa-release
+        path: ${{ runner.temp }}/build/*.ipa
+        retention-days: 30
+
+  deploy-android-internal:
+    needs: android-build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop'
+    
+    steps:
+    - name: Download Bundle
+      uses: actions/download-artifact@v3
+      with:
+        name: android-bundle-release
+
+    - name: Upload to Google Play Internal Testing
+      uses: r0adkll/upload-google-play@v1
+      with:
+        serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+        packageName: ai.handoc.mobile
+        releaseFiles: '*.aab'
+        track: internal
+        status: completed
+
+  deploy-ios-testflight:
+    needs: ios-build
+    runs-on: macos-latest
+    if: github.ref == 'refs/heads/develop'
+    
+    steps:
+    - name: Download IPA
+      uses: actions/download-artifact@v3
+      with:
+        name: ios-ipa-release
+
+    - name: Upload to TestFlight
+      env:
+        APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+        APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+        APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
+      run: |
+        xcrun altool --upload-app \
+          --type ios \
+          --file *.ipa \
+          --apiKey $APP_STORE_CONNECT_API_KEY_ID \
+          --apiIssuer $APP_STORE_CONNECT_API_ISSUER_ID
+
+  deploy-android-production:
+    needs: android-build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    
+    environment:
+      name: android-production
+      url: https://play.google.com/store/apps/details?id=ai.handoc.mobile
+    
+    steps:
+    - name: Download Bundle
+      uses: actions/download-artifact@v3
+      with:
+        name: android-bundle-release
+
+    - name: Upload to Google Play Production
+      uses: r0adkll/upload-google-play@v1
+      with:
+        serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+        packageName: ai.handoc.mobile
+        releaseFiles: '*.aab'
+        track: production
+        status: completed
+        whatsNewDirectory: mobile/android/metadata/
+
+  deploy-ios-production:
+    needs: ios-build
+    runs-on: macos-latest
+    if: github.ref == 'refs/heads/main'
+    
+    environment:
+      name: ios-production
+      url: https://apps.apple.com/app/handoc-ai/id123456789
+    
+    steps:
+    - name: Download IPA
+      uses: actions/download-artifact@v3
+      with:
+        name: ios-ipa-release
+
+    - name: Upload to App Store
+      env:
+        APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+        APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+        APP_STORE_CONNECT_API_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY }}
+      run: |
+        xcrun altool --upload-app \
+          --type ios \
+          --file *.ipa \
+          --apiKey $APP_STORE_CONNECT_API_KEY_ID \
+          --apiIssuer $APP_STORE_CONNECT_API_ISSUER_ID
+

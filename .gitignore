@@ -1,0 +1,609 @@
+# HanDoc AI .gitignore
+
+# =============================================================================
+# 환경 변수 및 설정 파일
+# =============================================================================
+.env
+.env.local
+.env.development
+.env.staging
+.env.production
+.env.test
+
+# 시크릿 파일
+secrets.toml
+secrets.json
+service-account.json
+google-credentials.json
+
+# =============================================================================
+# Python
+# =============================================================================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# PEP 582
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# =============================================================================
+# Node.js / React
+# =============================================================================
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Grunt intermediate storage
+.grunt
+
+# Bower dependency directory
+bower_components
+
+# node-waf configuration
+.lock-wscript
+
+# Compiled binary addons
+build/Release
+
+# Dependency directories
+jspm_packages/
+
+# TypeScript v1 declaration files
+typings/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# parcel-bundler cache
+.cache
+.parcel-cache
+
+# Next.js build output
+.next
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Gatsby files
+.cache/
+public
+
+# Storybook build outputs
+.out
+.storybook-out
+
+# Temporary folders
+tmp/
+temp/
+
+# =============================================================================
+# React 특화
+# =============================================================================
+# Production build
+build/
+dist/
+
+# Create React App
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# =============================================================================
+# 데이터베이스
+# =============================================================================
+# SQLite
+*.sqlite
+*.sqlite3
+*.db
+
+# PostgreSQL
+*.sql
+
+# =============================================================================
+# 로그 파일
+# =============================================================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =============================================================================
+# 업로드된 파일
+# =============================================================================
+uploads/
+temp_files/
+static/uploads/
+media/uploads/
+
+# PDF 파일 (테스트용 제외)
+*.pdf
+!test_files/*.pdf
+!docs/examples/*.pdf
+
+# 이미지 파일 (아이콘 제외)
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.tiff
+!public/icons/*
+!src/assets/icons/*
+!docs/images/*
+
+# =============================================================================
+# Docker
+# =============================================================================
+# Docker volumes
+docker-volumes/
+.docker/
+
+# =============================================================================
+# IDE 및 에디터
+# =============================================================================
+# VSCode
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# PyCharm
+.idea/
+*.swp
+*.swo
+*~
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*.swn
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# =============================================================================
+# 운영체제
+# =============================================================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.tmp
+*.temp
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# =============================================================================
+# 클라우드 및 배포
+# =============================================================================
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# AWS
+.aws/
+
+# Google Cloud
+gcloud/
+.gcloud/
+
+# Vercel
+.vercel
+
+# Netlify
+.netlify/
+
+# =============================================================================
+# 백업 파일
+# =============================================================================
+*.bak
+*.backup
+*.old
+*.orig
+*.save
+
+# =============================================================================
+# 압축 파일
+# =============================================================================
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# =============================================================================
+# 인증서 및 키
+# =============================================================================
+*.pem
+*.key
+*.crt
+*.csr
+*.p12
+*.pfx
+
+# =============================================================================
+# 캐시 파일
+# =============================================================================
+.cache/
+*.cache
+
+# =============================================================================
+# 테스트 관련
+# =============================================================================
+# Test artifacts
+test-results/
+test-reports/
+screenshots/
+videos/
+
+# =============================================================================
+# 모니터링 및 분석
+# =============================================================================
+# Sentry
+.sentryclirc
+
+# =============================================================================
+# 프로젝트 특화
+# =============================================================================
+# HanDoc AI 특화 무시 파일
+
+# 임시 분석 결과
+analysis_results/
+temp_analysis/
+
+# 사용자 업로드 파일
+user_uploads/
+processed_files/
+
+# AI 모델 캐시
+model_cache/
+.transformers_cache/
+
+# 개발용 테스트 파일
+test_pdfs/
+sample_documents/
+
+# 로컬 설정
+local_config.json
+dev_settings.py
+
+# 성능 프로파일링
+*.prof
+profiling_results/
+
+# 메모리 덤프
+*.dump
+*.hprof
+
+# =============================================================================
+# 문서화
+# =============================================================================
+# Sphinx
+docs/_build/
+docs/build/
+
+# MkDocs
+site/
+
+# =============================================================================
+# 패키지 관리자
+# =============================================================================
+# Poetry
+poetry.lock
+
+# Pipenv
+Pipfile.lock
+
+# Conda
+.conda/
+
+# =============================================================================
+# 기타
+# =============================================================================
+# 임시 파일
+*.tmp
+*.temp
+temp/
+tmp/
+
+# 스왑 파일
+*.swp
+*.swo
+
+# 로컬 히스토리
+.history/
+
+# 에디터 백업
+*~
+
+# 시스템 파일
+.DS_Store
+Thumbs.db
+
+# 개발 도구
+.vscode/settings.json
+.idea/
+
+# 로컬 환경 설정
+.local/
+local/
+
+# 실험적 기능
+experimental/
+playground/
+
+# 성능 테스트 결과
+benchmark_results/
+load_test_results/
+
+# 보안 스캔 결과
+security_scan_results/
+
+# 의존성 취약점 보고서
+vulnerability_reports/
+
+# API 문서 생성 파일
+api_docs_generated/
+
+# 자동 생성된 마이그레이션 파일 (필요시 주석 해제)
+# migrations/versions/
+
+# 자동 생성된 번역 파일
+locale/*/LC_MESSAGES/*.mo
+
+# 개발용 스크립트
+dev_scripts/
+scripts/dev/
+
+# 로컬 데이터베이스 파일
+*.db-journal
+*.db-wal
+*.db-shm
+
+# 로컬 Redis 덤프
+dump.rdb
+
+# 로컬 로그 파일
+*.log.*
+logs/*.log
+
+# 개발용 환경 파일
+.env.dev
+.env.development.local
+
+# 테스트 커버리지 HTML 리포트
+htmlcov/
+
+# 프로파일링 결과
+.prof/
+
+# 임시 업로드 디렉토리
+temp_uploads/
+
+# 개발용 더미 데이터
+dummy_data/
+fake_data/
+
+# 로컬 설정 오버라이드
+local_settings.py
+local_config.yaml
+
+# 개발용 스크립트
+dev_*.py
+dev_*.sh
+dev_*.js
+
+# 실험적 노트북
+experiments/
+notebooks/
+
+# 로컬 문서 빌드
+docs_build/
+
+# 개발용 Docker 오버라이드
+docker-compose.override.yml
+docker-compose.dev.yml
+docker-compose.local.yml
+
