@@ -2,15 +2,211 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HanDoc AI - 문서를 이해하는 가장 빠른 방법</title>
-    <meta name="description" content="한글 PDF 문서를 AI가 자동으로 요약, 질문/답변 생성, 키워드 추출하는 웹 및 모바일 앱" />
-    <meta name="keywords" content="PDF 분석, AI 요약, 문서 분석, 한글 PDF, 질문 답변, 키워드 추출" />
+    
+    <!-- 기본 SEO 메타 태그 -->
+    <title>HanDoc AI - 문서를 이해하는 가장 빠른 방법 | AI 기반 PDF 분석 서비스</title>
+    <meta name="description" content="한글 PDF 문서를 AI가 자동으로 분석하여 요약, 질문/답변 생성, 키워드 추출을 제공하는 무료 온라인 서비스입니다. OpenAI GPT-4 기반으로 정확하고 빠른 문서 분석을 경험하세요." />
+    <meta name="keywords" content="PDF 분석, AI 요약, 문서 분석, 한글 PDF, GPT-4, 키워드 추출, 질문 답변, 문서 요약, 인공지능, 자동 분석" />
+    <meta name="author" content="HanDoc AI Team" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="Korean" />
+    
+    <!-- Open Graph 메타 태그 (소셜 미디어) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="HanDoc AI - 문서를 이해하는 가장 빠른 방법" />
+    <meta property="og:description" content="한글 PDF 문서를 AI가 자동으로 분석하여 요약, 질문/답변 생성, 키워드 추출을 제공하는 무료 온라인 서비스입니다." />
+    <meta property="og:url" content="https://handoc-ai.vercel.app/" />
+    <meta property="og:site_name" content="HanDoc AI" />
+    <meta property="og:image" content="https://handoc-ai.vercel.app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="HanDoc AI - AI 기반 PDF 문서 분석 서비스" />
+    <meta property="og:locale" content="ko_KR" />
+    
+    <!-- Twitter Card 메타 태그 -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="HanDoc AI - 문서를 이해하는 가장 빠른 방법" />
+    <meta name="twitter:description" content="한글 PDF 문서를 AI가 자동으로 분석하여 요약, 질문/답변 생성, 키워드 추출을 제공하는 무료 온라인 서비스입니다." />
+    <meta name="twitter:image" content="https://handoc-ai.vercel.app/og-image.png" />
+    <meta name="twitter:image:alt" content="HanDoc AI - AI 기반 PDF 문서 분석 서비스" />
+    <meta name="twitter:site" content="@handocai" />
+    <meta name="twitter:creator" content="@handocai" />
+    
+    <!-- 추가 SEO 메타 태그 -->
+    <meta name="theme-color" content="#3B82F6" />
+    <meta name="msapplication-TileColor" content="#3B82F6" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="HanDoc AI" />
+    
+    <!-- 구조화된 데이터 (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "HanDoc AI",
+      "alternateName": "한독 AI",
+      "description": "한글 PDF 문서를 AI가 자동으로 분석하여 요약, 질문/답변 생성, 키워드 추출을 제공하는 무료 온라인 서비스",
+      "url": "https://handoc-ai.vercel.app/",
+      "applicationCategory": "ProductivityApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "KRW"
+      },
+      "creator": {
+        "@type": "Organization",
+        "name": "HanDoc AI Team"
+      },
+      "featureList": [
+        "PDF 텍스트 추출",
+        "AI 기반 문서 요약",
+        "자동 질문/답변 생성",
+        "키워드 추출",
+        "중요 문장 추출",
+        "다국어 지원",
+        "모바일 앱 지원"
+      ],
+      "screenshot": "https://handoc-ai.vercel.app/screenshot.png",
+      "softwareVersion": "1.0.0",
+      "datePublished": "2025-07-29",
+      "dateModified": "2025-07-29",
+      "inLanguage": "ko-KR",
+      "isAccessibleForFree": true,
+      "browserRequirements": "Requires JavaScript. Requires HTML5.",
+      "softwareHelp": {
+        "@type": "CreativeWork",
+        "url": "https://github.com/yhun1542/handoc-ai"
+      }
+    }
+    </script>
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://handoc-ai.vercel.app/" />
+    
+    <!-- 파비콘 -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    
+    <!-- 프리로드 중요 리소스 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" as="style" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    
+    <!-- DNS 프리페치 -->
+    <link rel="dns-prefetch" href="//api.openai.com" />
+    <link rel="dns-prefetch" href="//vercel.app" />
+    
+    <!-- 보안 헤더 -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+    
+    <!-- PWA 매니페스트 -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- 대체 언어 버전 -->
+    <link rel="alternate" hreflang="ko" href="https://handoc-ai.vercel.app/" />
+    <link rel="alternate" hreflang="en" href="https://handoc-ai.vercel.app/en" />
+    <link rel="alternate" hreflang="x-default" href="https://handoc-ai.vercel.app/" />
+    
+    <!-- 사이트맵 -->
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    
+    <!-- RSS 피드 -->
+    <link rel="alternate" type="application/rss+xml" title="HanDoc AI 업데이트" href="/rss.xml" />
+    
+    <!-- Google Analytics (예시) -->
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'GA_MEASUREMENT_ID');
+    </script> -->
+    
+    <!-- Microsoft Clarity (예시) -->
+    <!-- <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "CLARITY_PROJECT_ID");
+    </script> -->
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    
+    <!-- 구조화된 데이터 - 조직 정보 -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "HanDoc AI",
+      "url": "https://handoc-ai.vercel.app/",
+      "logo": "https://handoc-ai.vercel.app/logo.png",
+      "description": "AI 기반 문서 분석 서비스를 제공하는 기술 회사",
+      "foundingDate": "2025",
+      "sameAs": [
+        "https://github.com/yhun1542/handoc-ai"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "availableLanguage": ["Korean", "English"]
+      }
+    }
+    </script>
+    
+    <!-- 구조화된 데이터 - FAQ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "HanDoc AI는 무료인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "네, HanDoc AI는 완전 무료로 제공되는 서비스입니다. 회원가입 없이도 PDF 문서 분석을 이용하실 수 있습니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "어떤 형식의 파일을 지원하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "현재 PDF 형식의 문서만 지원합니다. 향후 Word, PowerPoint 등 다양한 형식을 지원할 예정입니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "분석 결과는 얼마나 정확한가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "OpenAI GPT-4 모델을 사용하여 높은 정확도의 분석 결과를 제공합니다. 다만 AI 특성상 100% 완벽하지 않을 수 있으니 참고용으로 활용해 주세요."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "모바일에서도 사용할 수 있나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "네, 웹 브라우저에서 모바일 최적화된 인터페이스로 이용 가능하며, Android와 iOS 전용 앱도 개발 중입니다."
+          }
+        }
+      ]
+    }
+    </script>
   </body>
 </html>
 
